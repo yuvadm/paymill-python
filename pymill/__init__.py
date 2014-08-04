@@ -1,1 +1,1 @@
-from pymill import *
+from .pymill import *
