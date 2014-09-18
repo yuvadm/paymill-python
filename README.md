@@ -129,6 +129,3 @@ You may delete objects by calling the service's delete() method with an object i
 Copyright 2014 PAYMILL GmbH.
 
 MIT License (enclosed)
-
-
->>>>>>> origin/master
