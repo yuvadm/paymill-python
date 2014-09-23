@@ -1,20 +1,131 @@
-This library provides access to the Paymill API from a Python application.
+![PAYMILL icon](https://static.paymill.com/r/335f99eb3914d517bf392beb1adaf7cccef786b6/img/logo-download_Light.png)
+# paymill-python
 
-It depends on [Requests](http://docs.python-requests.org/en/latest/), and thereby should also work on Google App Engine.
+Python wrapper for PAYMILL API(beta)
 
-Example of usage:
-```python
-import pymill
-p = pymill.Pymill("YOUR PRIVATE KEY GOES HERE")
+## Getting started
 
-# show IDs for all stored cards
-for card in p.get_cards():
-    print card 
+- If you are not familiar with PAYMILL, start with the [documentation](https://www.paymill.com/en-gb/documentation-3/).
+- Install the latest release.
+- Check the API [reference](https://www.paymill.com/en-gb/documentation-3/reference/api-reference/).
+- Check the tests.
 
-# create new card, run transaction on it and refund part of that again
-card = p.new_card("token from Paymill bridge goes here")
-transaction = p.transact(230, payment=card)
-ref = p.refund(transaction, 30)
+
+## Installation
+
+After checking out the project navigate to the root directory and execute following line:
+
+For UNIX-based OS
+```
+ python setup.py install
+```
+For Windows
+
+```
+ setup.py install
 ```
 
-Find the remaining documentation at http://pymill.readthedocs.org.
+
+## What's new
+
+We have released version 1. This version is no longer backwards compatible with the pymill fork from https://github.com/kliment/pymill.
+
+## Usage
+
+Initialize the library by providing your api key:
+```python
+   paymill_context = paymill.PaymillContext('<YOUR PRIVATE API KEY>');
+```
+PaymillContext loads the context of PAYMILL for a single account, by providing a merchants private key. It creates 8 services, which represents the PAYMILL API:
+ * ClientService
+ * OfferService
+ * PaymentService
+ * PreauthorizationService
+ * RefundService
+ * SubscriptionService
+ * TransactionService
+ * WebhookService
+
+These services should not be created directly. They have to be obtained by the context's accessors.
+
+### Using services
+
+
+In all cases, you'll use the predefined service classes to access the PAYMILL API.
+
+To fetch a service instance, call *service name* accessor from paymill_context, like
+```python
+ client_service = paymill_context.get_client_service();
+```
+Every service instance provides basic methods for CRUD functionality.
+
+### Creating objects
+
+Every service provides instance factory methods for creation. They are very different for every service, because every object can be created in a different way. The common pattern is
+```python
+ xxx_service.create_XXX(params...);
+```
+For example: client can be created with two optional parameters: *email* and *description*. So we have four possible methods to create the client:
+```python
+ #creates a client without email and description
+ clientService.create()
+```
+```python
+ #creates a client with email
+ clientService.create(email='john.rambo@paymill.com')
+```
+```python
+ #creates a client with description
+ clientService.create(description='CRM Id: fake_34212')
+```
+```python
+ #creates a client with email and description
+ clientService.create(email='john.rambo@paymill.com', description='CRM Id: fake_34212')
+```
+
+### Retrieving objects
+
+You can retrieve an object by using the get() method with with the instance itself:
+```python
+ client_service.detail(client);
+```
+This method throws an PMError if there is no client under the given id.
+
+### Retrieving lists
+
+To retrieve a list you may simply use the list() method:
+```python
+ clients = client_service.list();
+```
+You may provide a filter and order to list method:
+```python
+ clients = client_service.list(
+     order=paymill.models.client.Client.Order.created_at().desc(),
+     filtr=paymill.models.client.Client.Filter.by_email('john.rambo@paymill.com'))
+```
+This will load only clients with email john.rambo@paymill.com, order descending by creation date.
+
+### Updating objects
+
+In order to update an object simply call a service's update() method:
+```python
+ client_service.update(client);
+```
+
+### Deleting objects
+
+You may delete objects by calling the service's delete() method with an object instance.
+```python
+ client_service.remove(client);
+```
+
+## Changelog
+
+### 1.0
+* New implementation from scratch that conforms to PAYMILL API v2.1
+
+## License
+
+Copyright 2014 PAYMILL GmbH.
+
+MIT License (enclosed)
