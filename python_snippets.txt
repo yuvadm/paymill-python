@@ -1,0 +1,522 @@
+﻿
+
+- Authentication
+
+paymill_context = paymill.PaymillContext('<YOUR PRIVATE API KEY>');
+
+
+
+
+---------------------Payments----------------------
+
+
+- Create new Credit Card Payment with TOKEN
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+
+- Create new Credit Card Payment with TOKEN & CLIENT
+
+payment_service = paymill_context.get_payment_service();
+
+client_service = paymill_context.get_client_service();
+
+client = client_service.create();
+
+payment_with_token_and_client = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6', client_id=client.id);
+
+
+- Create new Debit Payment with TOKEN
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+
+- Create new Debit Payment with TOKEN & CLIENT
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token_and_client = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6', client_id=client_id=client.id);
+
+
+- Payment Details
+
+payment_service = paymill_context.get_payment_service();
+
+payment_details = payment_service.detail(paymentObject);
+
+
+- List Payments
+
+payment_service = paymill_context.get_payment_service();
+
+payments_list = payment_service.list();
+
+
+- Remove Payment
+
+payment_service = paymill_context.get_payment_service();
+
+paymentService.remove(paymentObject);
+
+
+
+
+---------------------Preauthorizations----------------------
+
+
+- Create new Preauthorization with TOKEN
+
+preauthorization_service = paymill_context.get_preauthorization_service();
+
+preauthorization_with_token =  preauthorization_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR');
+
+
+- Create new Preauthorization with PAYMENT
+
+preauthorization_service = paymill_context.get_preauthorization_service();
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+preauthorization_with_payment =  preauthorization_service.create_with_payment_id(payment_id =payment_with_token.id, amount=4200, currency='EUR');
+
+
+- Preauthorization Details
+
+preauthorization_service = paymill_context.get_preauthorization_service();
+
+preauthorization_details = preauthorization_service.detail(preauthorizationObject);
+
+
+- List Preauthorizations
+
+preauthorization_service = paymill_context.get_preauthorization_service();
+
+preauthorizations_list = preauthorization_service.list();
+
+
+- Remove Preauthorizations
+
+preauthorization_service = paymill_context.get_preauthorization_service();
+
+preauthorization_service.remove(preauthorizationObject);
+
+
+
+
+---------------------Transactions----------------------
+
+
+- Create new Transaction with PAYMENT
+
+transaction_service = paymill_context.get_transaction_service();
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+transaction_with_payment = transaction_service.create_with_payment_id(payment_id =payment_with_token.id, amount=4200, currency='EUR', description='Test Python');
+
+
+- Create new Transaction with TOKEN
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_with_token = transaction_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR', description='Test Python');
+
+
+- Create new Transaction with CLIENT & PAYMENT
+
+transaction_service = paymill_context.get_transaction_service();
+
+client_service = paymill_context.get_client_service();
+
+client = client_service.create();
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+transaction_with_client_and_payment = transaction_service.create_with_payment_id(payment_id =payment_with_token.id, amount=4200, currency='EUR', description='Test Python', client_id=client.id);
+
+
+- Create new Transaction with PREAUTHORIZATION
+
+transaction_service = paymill_context.get_transaction_service();
+
+preauthorization_with_token =  preauthorization_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR');
+
+transaction_with_preauthorization = transaction_service.create_with_preauthorization_id(preauthorization_with_token.id, amount=4200, currency='EUR', description='Test Python');
+
+
+- Create new Transaction with APP FEE
+
+transaction_service = paymill_context.get_transaction_service();
+
+payment_service = paymill_context.get_payment_service();
+
+payment_with_token = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+transaction_with_token = transaction_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR', description='Test Python', fee_amount=4200, fee_payment_id=payment_with_token.id, fee_currency='EUR');
+
+
+- Transaction Details
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_details = transaction_service.detail(transactionObject);
+
+
+- Update Transaction
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_with_token = transaction_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR', description='Test Python');
+
+transaction_with_token.amount = 3200;
+transaction_with_token.currency = 'USD';
+transaction_with_token.description = 'Updated Test Python'
+transaction_service.update(transaction_with_token);
+
+
+- List Transactions
+
+transaction_service = paymill_context.get_transaction_service();
+
+transactions_list = transaction_service.list();
+
+
+- Remove  Transactions
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_service.remove(transactionObject);
+
+
+
+---------------------Refunds----------------------
+
+
+- Refund Transaction
+
+transaction_service = paymill_context.get_transaction_service();
+
+transaction_with_token = transaction_service.create_with_token(token='098f6bcd4621d373cade4e832627b4f6', amount=4200, currency='EUR', description='Test Python');
+
+refund_service = paymill_context.get_refund_service();
+
+refund_transaction = refund_service.refund_transaction(transaction_id=transaction_with_token.id, amount=4200);
+
+
+- Refund Details
+
+refund_service = paymill_context.get_refund_service();
+
+refund_details =  refund_service.detail(refundObject)
+
+
+- List Refunds
+
+refund_service = paymill_context.get_refund_service();
+
+refunds_list = refund_service.list();
+
+
+
+---------------------Clients----------------------
+
+
+- Create new Client
+
+client_service = paymill_context.get_client_service();
+
+client = client_service.create(email='lovely-client@example.com');
+
+
+- Client Details
+
+client_service = paymill_context.get_client_service();
+
+client_details =  client_service.detail(clientObject)
+
+
+- Update Client
+
+client_service = paymill_context.get_client_service();
+
+client = client_service.create(email='lovely-client@example.com');
+
+client.email = 'lovely-client-updated-email@example.com';
+
+client_service.update(client);
+
+
+- Remove Client
+
+client_service = paymill_context.get_client_service();
+
+client_service.remove(clientObject);
+
+
+- List Clients
+
+client_service = paymill_context.get_client_service();
+
+clients_list = client_service.list();
+
+
+
+
+---------------------Offers----------------------
+
+
+- Create new Offer
+
+offer_service = paymill_context.get_offer_service();
+
+offer = offer_service.create(amount=100, currency='EUR', interval='1 MONTH', 'My offer');
+
+
+- Offer Details
+
+offer_service = paymill_context.get_offer_service();
+
+offer_details =  offer_service.detail(offerObject)
+
+
+- Update Offer
+
+offer_service = paymill_context.get_offer_service();
+
+offer = offer_service.create(amount=100, currency='EUR', interval='1 MONTH', 'My offer');
+
+offer.amount = 200;
+
+offer.currency = 'USD';
+
+offer.interval = '2 WEEKS';
+
+offer.name = 'My updated offer';
+
+offer_service.update(offer);
+
+
+- Remove Offer
+
+offer_service = paymill_context.get_offer_service();
+
+offer_service.remove(offerObject);
+
+
+- List Offers 
+
+offer_service = paymill_context.get_offer_service();
+
+offers_list = offer_service.list();
+
+
+
+
+---------------------Subscriptions----------------------
+
+
+- Create new Subscription WITHOUT OFFER 
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_without_offer = subscription_service.create_with_amount(payment_id=payment.id, amount=4200, currency='EUR', interval='2 DAYS, MONDAY');
+
+
+- Create new Subscription WITH AN OFFER 
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+offer_service = paymill_context.get_offer_service();
+
+offer = offer_service.create(amount=4200, currency='EUR', interval='1 MONTH', 'My offer');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_with_an_offer = subscription_service.create_with_offer_id(payment_id=payment.id, offer_id=offer.id);
+
+
+- Create new Subscription WITH OFFER AND DIFFERENT VALUES
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+offer_service = paymill_context.get_offer_service();
+
+offer = offer_service.create(amount=4200, currency='EUR', interval='1 MONTH', 'My offer');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_with_offer_and_different_values = subscription_service.create_with_offer_id(payment_id=payment.id, offer_id=offer.id, name='Subscription with values', period_of_validity='4 WEEKS', start_at=1409647372);
+
+
+- Subscription Details
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_details =  subscription_service.detail(subscriptionObject)
+
+
+- Update Subscription GENERAL
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription = subscription_service.create_with_amount(payment_id=payment.id, amount=4200, currency='EUR', interval='2 DAYS, MONDAY', name='Subscription');
+
+subscription.name = 'Updated Subscription';
+
+ subscription_service.update(subscription);
+
+
+- Update Subscription AMOUNT
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription = subscription_service.create_with_amount(payment_id=payment.id, amount=4200, currency='EUR', interval='2 DAYS, MONDAY', name='Subscription');
+
+subscription.amount = 5200;
+
+subscription_service.update_with_amount(subscription, amount_change_type=1);
+
+
+- Update Subscription OFFER
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+offer_service = paymill_context.get_offer_service();
+
+offer = offer_service.create(amount=4200, currency='EUR', interval='1 MONTH', 'My offer');
+
+updated_offer = offer_service.create(amount=5100, currency='USD', interval='1 MONTH', 'My updated offer');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription = subscription_service.create_with_offer_id(payment_id=payment.id, offer_id=offer.id);
+
+subscription.offer_id=updated_offer.id
+
+subscription_service.update_with_offer_id(subscription, offer_change_type=2);
+
+
+- Update Subscription PAUSE
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_service.pause(subscriptionObject);
+
+
+- Update Subscription UNPAUSE
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_service.unpause(subscriptionObject);
+
+
+- Cancel Subscription
+
+payment_service = paymill_context.get_payment_service();
+
+payment = payment_service.create(token='098f6bcd4621d373cade4e832627b4f6');
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription = subscription_service.create_with_amount(payment_id=payment.id, amount=4200, currency='EUR', interval='2 DAYS, MONDAY');
+
+subscription.is_canceled = TRUE;
+subscription.canceled_at = 1409647372;
+
+ subscription_service.update(subscription);
+
+
+- Delete Subscription
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_service.remove(subscription Object);
+
+
+- List Subscriptions
+
+subscription_service = paymill_context.get_subscription_service();
+
+subscription_list = subscription_service.list();
+
+
+
+
+-------------------------Webhooks----------------------------------------------
+
+
+- Create new URL Webhook
+
+webhook_service = paymill_context.get_webhook_service();
+
+url_webhook = webhook_service.create_url(url='<your-webhook-url>', event_types=['subscription.succeeded'], active=True)
+
+			
+- Create new E-Mail Webhook
+
+webhook_service = paymill_context.get_webhook_service();
+
+email_webhook = webhook_service.create_email(email='lovely-webhook@example.com', event_types=['subscription.succeeded'], active=True)
+
+
+- Webhook Details
+
+webhook_service = paymill_context.get_webhook_service();
+
+webhook_details =  webhook_service.detail(webhookObject)
+
+
+- Update Webhook
+
+webhook_service = paymill_context.get_webhook_service();
+
+webhook = webhook_service.create_email(email='lovely-webhook@example.com', event_types=['subscription.succeeded'], active=True)
+
+webhook.email = 'updated-lovely-webhook@example.com'
+
+webhook_service.update(webhook);
+
+
+- Remove Webhook
+
+webhook_service = paymill_context.get_webhook_service();
+
+webhook_service.remove(webhookObject);
+
+
+- List Webhooks
+
+webhook_service = paymill_context.get_webhook_service();
+
+webhooks_list = webhook_service.list();
+
