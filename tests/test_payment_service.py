@@ -23,10 +23,11 @@ class TestPaymentService(unittest.TestCase):
         self.assertEqual(None, p1.client)
 
     def test_create_payment_with_client(self):
+        c = self.p.get_client_service().create()
         p1 = self.p.get_payment_service().create(token=test_config.magic_token,
-                                                 client_id='client_33baaf3ee3251b083420')
+                                                 client_id=c.id)
 
-        self.assertEqual('client_33baaf3ee3251b083420', p1.client.id)
+        self.assertEqual(c.id, p1.client.id)
 
     def test_delete_payment(self):
         p1 = self.p.get_payment_service().create(token=test_config.magic_token)
