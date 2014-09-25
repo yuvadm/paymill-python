@@ -28,7 +28,7 @@ For Windows
 
 ## What's new
 
-We have released version 1. This version is no longer backwards compatible with the pymill fork from https://github.com/kliment/pymill.
+We have released version 1.0.0 which is coded directly to the PAYMILL API v2.1 .This version is no longer backwards compatible with the pymill fork from https://github.com/kliment/pymill. If you need to be PAYMILL API v2.0 compatible please use https://github.com/paymill/paymill-python/tree/v0.1.2.
 
 ## Usage
 
