@@ -68,19 +68,19 @@ Every service provides instance factory methods for creation. They are very diff
 For example: client can be created with two optional parameters: *email* and *description*. So we have four possible methods to create the client:
 ```python
  #creates a client without email and description
- clientService.create()
+ client_service.create()
 ```
 ```python
  #creates a client with email
- clientService.create(email='john.rambo@paymill.com')
+ client_service.create(email='john.rambo@paymill.com')
 ```
 ```python
  #creates a client with description
- clientService.create(description='CRM Id: fake_34212')
+ client_service.create(description='CRM Id: fake_34212')
 ```
 ```python
  #creates a client with email and description
- clientService.create(email='john.rambo@paymill.com', description='CRM Id: fake_34212')
+ client_service.create(email='john.rambo@paymill.com', description='CRM Id: fake_34212')
 ```
 
 ### Retrieving objects
