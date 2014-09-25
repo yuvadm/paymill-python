@@ -120,3 +120,13 @@ class TestSubscriptionService(unittest.TestCase):
         subscription.amount = 5600
         s = p.get_subscription_service().update_with_amount(subscription, amount_change_type=1)
         self.assertEqual(5600, s.amount)
+
+    def test_subscription_cancel(self):
+        p = PaymillContext(test_config.api_key)
+        payment = p.get_payment_service().create(test_config.magic_token)
+        subscription = p.get_subscription_service().create_with_amount(payment.id,
+                                                                       TestSubscriptionService.amount,
+                                                                       TestSubscriptionService.currency,
+                                                                       TestSubscriptionService.interval)
+        s = p.get_subscription_service().cancel(subscription)
+        self.assertIsInstance(s, Subscription)
