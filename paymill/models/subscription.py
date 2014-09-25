@@ -19,7 +19,7 @@ class Subscription(JsonObject):
     offer = ObjectProperty(offer.Offer)
     """:type Offer object"""
 
-    amount = IntegerProperty()
+    amount = None
     """:type int: the amount of the subscription in cents"""
 
     temp_amount = StringProperty()#IntegerProperty()
@@ -79,6 +79,13 @@ class Subscription(JsonObject):
 
     def updatable_fields(self):
         return 'payment', 'currency', 'interval', 'name', 'period_of_validity', 'trial_end'
+
+    #workaround for returned type of amount
+    def __getattribute__(self, name):
+        if name == 'amount':
+            attr = object.__getattribute__(self, name)
+            return int(attr)
+        return object.__getattribute__(self, name)
 
     class Order(Order):
         @classmethod
