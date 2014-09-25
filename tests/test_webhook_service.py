@@ -17,8 +17,11 @@ class TestWebhookService(unittest.TestCase):
 
     def setUp(self):
         self.p = PaymillContext(api_key=test_config.api_key)
+        self.webhook = None
 
     def test_webhook(self):
-        webhook = self.p.get_webhook_service().create_email('yalnazov@gmail.com', ['subscription.succeeded'], True)
+        self.webhook = self.p.get_webhook_service().create_email('yalnazov@gmail.com', ['subscription.succeeded'], True)
+        self.assertIsInstance(self.webhook, Webhook)
 
-        self.assertIsInstance(webhook, Webhook)
+    def tearDown(self):
+        self.p.get_webhook_service().remove(self.webhook)

@@ -45,8 +45,6 @@ class TestClientService(unittest.TestCase):
     def test_remove_client(self):
         c = self.p.client_service.create(email="delete@mail.com")
         self.assertIsInstance(self.p.client_service.remove(c), paymill.models.client.Client)
-        #TODO: report bug for delete, After 200, API returns
-        #{"data":null, "mode":"test"}
 
     def test_detail_client(self):
         c = self.p.client_service.create(email="details@mail.com")
