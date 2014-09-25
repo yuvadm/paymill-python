@@ -126,4 +126,11 @@ class SubscriptionService(PaymillService):
         :param Subscription obj: the Subscription object with an id set
         :return Subscription: the removed Subscription object
         """
-        return self._remove(obj)
+        return self._remove(obj, dict(remove='true'))
+
+    def cancel(self, obj):
+        """Cancels a remote Subscription representation with that obj.id
+        :param Subscription obj: the Subscription object with an id set
+        :return Subscription: the removed Subscription object
+        """
+        return self._remove(obj, dict(remove='false'))
