@@ -94,10 +94,3 @@ class TransactionService(PaymillService):
         :return Transaction: the updated Transaction object
         """
         return self._update(obj)
-
-    def remove(self, obj):
-        """Removes a remote Transaction representation with that obj.id
-        :param Transaction obj: the Transaction object with an id set
-        :return Transaction: the removed Transaction object:
-        """
-        return self._remove(obj)
