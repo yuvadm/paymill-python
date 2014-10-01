@@ -1,15 +1,15 @@
 # coding=utf-8
 __author__ = 'yalnazov'
 
-import utils.http_client
-import services.client_service
-import services.offer_service
-import services.payment_service
-import services.preauthorization_service
-import services.refund_service
-import services.subscription_service
-import services.transaction_service
-import services.webhook_service
+from . import utils.http_client
+from . import services.client_service
+from . import services.offer_service
+from . import services.payment_service
+from . import services.preauthorization_service
+from . import services.refund_service
+from . import services.subscription_service
+from . import services.transaction_service
+from . import services.webhook_service
 
 
 class PaymillContext(object):

@@ -1,2 +1,2 @@
-import http_client
-import pm_error
+from . import http_client
+from . import pm_error

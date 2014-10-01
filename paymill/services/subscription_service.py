@@ -1,6 +1,6 @@
 # coding=utf-8
 import paymill.models.subscription
-from paymill_service import PaymillService
+from .paymill_service import PaymillService
 
 __author__ = 'yalnazov'
 

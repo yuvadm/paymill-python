@@ -1,14 +1,14 @@
 # coding=utf-8
 __author__ = 'yalnazov'
 import requests
-import abstract_http_client
-from pm_error import PMError
+from . import abstract_http_client
+from .pm_error import PMError
 import logging
 # these two lines enable debugging at httplib level (requests->urllib3->httplib)
 # you will see the REQUEST, including HEADERS and DATA, and RESPONSE with HEADERS but without DATA.
 # the only thing missing will be the response.body which is not logged.
-import httplib
-httplib.HTTPConnection.debuglevel = 1
+import http.client
+http.client.HTTPConnection.debuglevel = 1
 
 logging.basicConfig()  # you need to initialize logging, otherwise you will not see anything from requests
 logging.getLogger().setLevel(logging.INFO)

@@ -1,8 +1,8 @@
-import client_service
-import offer_service
-import payment_service
-import preauthorization_service
-import refund_service
-import subscription_service
-import transaction_service
-import webhook_service
+from . import client_service
+from . import offer_service
+from . import payment_service
+from . import preauthorization_service
+from . import refund_service
+from . import subscription_service
+from . import transaction_service
+from . import webhook_service

@@ -5,14 +5,13 @@ import abc
 from paymill.models.paymill_list import PaymillList
 
 
-class PaymillService(object):
+class PaymillService(object, metaclass=abc.ABCMeta):
 
     """Abstract Base Classes(ABC) for all PAYMILL services.
 
     Do not use this class directly.
 
     """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractproperty
     def endpoint_path(self):
@@ -42,7 +41,7 @@ class PaymillService(object):
                 else:
                     update_dict.update(**{str(u): obj[u]})
         #pack all special updatable object's fields in the update_dict
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             update_dict.update(**{k: v})
 
         return self.http_client('PUT', update_dict, self.endpoint_path() + '/' + obj.id,

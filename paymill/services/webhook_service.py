@@ -1,6 +1,6 @@
 # coding=utf-8
 import paymill.models
-from paymill_service import PaymillService
+from .paymill_service import PaymillService
 import json
 __author__ = 'yalnazov'
 

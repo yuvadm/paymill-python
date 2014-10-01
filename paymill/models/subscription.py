@@ -1,9 +1,9 @@
 # coding=utf-8
 from paymill.models.order import Order
 from paymill.models.filter import Filter
-import payment
-import client
-import offer
+from . import payment
+from . import client
+from . import offer
 from jsonobject import *
 __author__ = 'yalnazov'
 

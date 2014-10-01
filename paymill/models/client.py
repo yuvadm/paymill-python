@@ -1,6 +1,6 @@
 # coding=utf-8
-from order import Order
-from filter import Filter
+from .order import Order
+from .filter import Filter
 from jsonobject import *
 __author__ = 'yalnazov'
 
@@ -35,10 +35,10 @@ class Client(JsonObject):
     def __getattribute__(self, name):
         attr = object.__getattribute__(self, name)
         if name == 'subscription':
-            import subscription
+            from . import subscription
             return ListProperty(subscription.Subscription).wrap(attr)
         if name == 'payment':
-            import payment
+            from . import payment
             if isinstance(attr, dict):
                 return ListProperty(payment.Payment).wrap(attr)
             if isinstance(attr, str):

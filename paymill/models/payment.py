@@ -2,7 +2,7 @@
 from paymill.models.order import Order
 from paymill.models.filter import Filter
 from jsonobject import *
-import client
+from . import client
 __author__ = 'yalnazov'
 
 
